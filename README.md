@@ -27,7 +27,7 @@ A **community-driven web application** that helps hostel residents manage errand
 ![Dashboard Screenshot](screenshots/Dashboard.png)  
 
 ### Add Errand
-![Add Errand Screenshot](screenshots/Add Errand Screenshot.png)  
+![Add Errand Screenshot](screenshots/Add_Errand.png)  
 
 ---
 
