@@ -1,19 +1,30 @@
 {% extends "base.html" %}
-{% block title %}Add Errand{% endblock %}
 {% block content %}
-<h2 class="mb-3">Add Errand</h2>
-<form method="POST">
-    <input class="form-control mb-2" type="text" name="name" placeholder="Errand Name" required>
-    <input class="form-control mb-2" type="text" name="location" placeholder="Location" required>
-    <input class="form-control mb-2" type="time" name="start_time" required>
-    <input class="form-control mb-2" type="time" name="end_time" required>
-    <select class="form-select mb-2" name="priority" required>
-        <option value="1">1 - Highest</option>
-        <option value="2">2</option>
-        <option value="3" selected>3 - Medium</option>
-        <option value="4">4</option>
-        <option value="5">5 - Lowest</option>
-    </select>
-    <button class="btn btn-success">Add Errand</button>
-</form>
+<div class="container mt-4" style="max-width: 500px;">
+    <h2>{{ errand and 'Edit Errand' or 'Add Errand' }}</h2>
+    <form method="POST">
+        <div class="mb-3">
+            <label class="form-label">Errand Name</label>
+            <input type="text" class="form-control" name="name" required value="{{ errand.name if errand else '' }}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Location</label>
+            <input type="text" class="form-control" name="location" required value="{{ errand.location if errand else '' }}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Start Time (HH:MM)</label>
+            <input type="text" class="form-control" name="start_time" required value="{{ errand.start_time if errand else '' }}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">End Time (HH:MM)</label>
+            <input type="text" class="form-control" name="end_time" required value="{{ errand.end_time if errand else '' }}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Priority (1-5)</label>
+            <input type="number" class="form-control" name="priority" min="1" max="5" value="{{ errand.priority if errand else 3 }}">
+        </div>
+        <button type="submit" class="btn btn-primary">{{ errand and 'Update' or 'Add' }}</button>
+        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
 {% endblock %}
