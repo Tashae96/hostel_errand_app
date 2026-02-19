@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Welcome, {{ current_user.username }}!</h2>
+    <a href="{{ url_for('add_errand') }}" class="btn btn-primary my-3">Add New Errand</a>
+
+    <h4>Your Errands</h4>
+    <div class="row">
+        {% for e in errands %}
+        <div class="col-md-4">
+            <div class="card mb-3 {% if e.overlaps %}border-danger{% else %}border-success{% endif %}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ e.name }}</h5>
+                    <p class="card-text">
+                        <strong>Location:</strong> {{ e.location }} <br>
+                        <strong>Time:</strong> {{ e.start_time }} - {{ e.end_time }} <br>
+                        <strong>Priority:</strong> <span class="badge bg-warning text-dark">{{ e.priority }}</span>
+                    </p>
+                    {% if e.overlaps %}
+                        <div class="alert alert-danger py-1">
+                            ⚠ Overlaps with other errands!
+                            {% for o in e.overlaps %}
+                                <p>{{ o.user.username }}'s {{ o.name }} ({{ o.start_time }}-{{ o.end_time }}) at {{ o.location }}</p>
+                                {% if current_user not in o.joined_users and o.user_id != current_user.id %}
+                                    <a href="{{ url_for('join_errand', errand_id=o.id) }}" class="btn btn-sm btn-success mb-1">Join</a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <a href="{{ url_for('edit_errand', errand_id=e.id) }}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="{{ url_for('delete_errand', errand_id=e.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Delete this errand?');">Delete</a>
+                    {% if e.joined_users %}
+                        <p class="mt-2"><strong>Joined Users:</strong> 
+                        {% for u in e.joined_users %}
+                            {{ u.username }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

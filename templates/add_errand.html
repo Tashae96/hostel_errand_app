@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Add Errand{% endblock %}
+{% block content %}
+<h2 class="mb-3">Add Errand</h2>
+<form method="POST">
+    <input class="form-control mb-2" type="text" name="name" placeholder="Errand Name" required>
+    <input class="form-control mb-2" type="text" name="location" placeholder="Location" required>
+    <input class="form-control mb-2" type="time" name="start_time" required>
+    <input class="form-control mb-2" type="time" name="end_time" required>
+    <select class="form-select mb-2" name="priority" required>
+        <option value="1">1 - Highest</option>
+        <option value="2">2</option>
+        <option value="3" selected>3 - Medium</option>
+        <option value="4">4</option>
+        <option value="5">5 - Lowest</option>
+    </select>
+    <button class="btn btn-success">Add Errand</button>
+</form>
+{% endblock %}
